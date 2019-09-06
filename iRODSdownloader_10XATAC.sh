@@ -18,7 +18,7 @@ for SAMPLE in 5891STDY80386{51..67}
                 mv "${file}" "${file/*.cram/$SAMPLE\_S$count\_L001}"
                 file=$(sed 's/R1/R2/g' <<< $file)
                 mv "${file}" "${file/*.cram/$SAMPLE\_S$count\_L001}"
-		file=$(sed 's/R2/R3/g' <<< $file)
+		file=$(sed 's/R2/I2/g' <<< $file)
 		mv "${file}" "${file/*.cram/$SAMPLE\_S$count\_L001}"
                 (( count++ ))
             done
