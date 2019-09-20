@@ -1,9 +1,10 @@
 #!/bin/bash
 #CellrangerSummary.sh 5891STDY80386{51..67}
-echo -n "sample," > summary.csv
-head -1 $1/outs/summary.csv >> summary.csv
+cat <(echo "sample") <(head -1 $1/outs/summary.csv | tr , '\n') > summary.csv
 for sample in "$@"
     do
-         echo -n $sample"," >> summary.csv; tail -1 $sample/outs/summary.csv >> summary.csv
+        paste <(cat <(echo "sample") <(head -1 $sample/outs/summary.csv | tr , '\n')) \
+              <(cat <(echo $sample)  <(tail -1 $sample/outs/summary.csv | tr , '\n')) > temp2
+        join -1 1 -2 1 summary.csv temp2 > summary2.csv
+        mv summary2.csv summary.csv
     done
-
