@@ -1,8 +1,7 @@
 #!/bin/bash -x
 CPU=28
-CELLRANGER=/home/ubuntu/tools/cellranger-atac-1.1.0/cellranger-atac
-REFSEQ=/home/ubuntu/refseq/refdata-cellranger-atac-GRCh38-1.1.0
-
+CELLRANGER=~/tools/cellranger-atac-1.2.0/cellranger-atac
+REFSEQ=~/refseq/refdata-cellranger-atac-GRCh38-1.2.0/
 ### Non-CITE Samples
 for PREFIX in 5891STDY80386{51..67}
     do
