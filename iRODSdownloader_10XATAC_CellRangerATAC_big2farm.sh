@@ -2,8 +2,8 @@
 set -e
 FARMPATH="/lustre/scratch117/cellgen/team205/10x-runs/scatac"
 CPU=50
-CELLRANGER=~/users/ph12/tools/cellranger-atac-1.2.0/cellranger-atac
-REFSEQ=~/users/ph12/refseq/refdata-cellranger-atac-GRCh38-1.2.0
+CELLRANGER=~/tools/cellranger-atac-1.2.0/cellranger-atac
+REFSEQ=~/refseq/refdata-cellranger-atac-GRCh38-1.2.0
 for SAMPLE in 5891STDY80386{51..67}
     do
         echo "Processing: "$SAMPLE
