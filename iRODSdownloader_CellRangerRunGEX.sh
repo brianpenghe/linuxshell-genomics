@@ -27,7 +27,7 @@ for SAMPLE in 5891STDY80386{66..67}
         mkdir -p fastq-$SAMPLE && mv *.fastq.gz fastq-$SAMPLE
 
         $CELLRANGER count --localcores $CPU --id=$SAMPLE --transcriptome=$REFSEQ \
-        --fastqs=/mnt/190829Lung/fastq-$SAMPLE \
+        --fastqs=fastq-$SAMPLE \
         --sample=$SAMPLE
         rm -r ./$SAMPLE/SC_* ./$SAMPLE/*.tgz ./$SAMPLE/_* ./fastq-$SAMPLE
 done

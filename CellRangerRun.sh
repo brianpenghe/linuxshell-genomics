@@ -7,7 +7,7 @@ REFSEQ=/home/ubuntu/refseq/refdata-cellranger-GRCh38-3.0.0
 for PREFIX in 5841STDY79914{75..87} WSSS8011222
     do
         $CELLRANGER count --localcores $CPU --id=$PREFIX --transcriptome=$REFSEQ \
-        --fastqs=/mnt/190829Lung/fastq-$PREFIX \
+        --fastqs=fastq-$PREFIX \
         --sample=$PREFIX
         rm -r ./$PREFIX/SC_* ./$PREFIX/*.tgz ./$PREFIX/_* 
 done
