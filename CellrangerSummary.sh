@@ -6,6 +6,7 @@ for sample in "$@"
         csvtool transpose $sample/outs/*summary.csv > tempfilesforcsvtool.$sample
         csvjoin -c 1 summary.csv tempfilesforcsvtool.$sample > temp2
         mv temp2 summary.csv
+	rm tempfilesforcsvtool.$sample
     done
 
 csvformat -T summary.csv > summary.tsv
