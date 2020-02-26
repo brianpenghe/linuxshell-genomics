@@ -1,5 +1,6 @@
 #!/bin/sh
 #PlateTo10XFastq ../rep1/fastqFolder unfiltered_barcodes.tsv
+#This script is created by Peng He and krzysztof polański at Sanger Institute
 count=1
 for FID in $1/*R1.fastq
 	do
