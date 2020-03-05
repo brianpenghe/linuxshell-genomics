@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
-for SAMPLE in 5891STDY87091{27..30}
-    do
-        echo "Processing: "$SAMPLE
-        printf '#!/bin/bash\nset -e\n\n----\n' > imeta$SAMPLE.sh
-        imeta qu -z seq -d sample = $SAMPLE and target = 1 and library_type = 'Chromium single cell TCR'>> imeta$SAMPLE.sh
-        sed ':a;N;$!ba;s/----\ncollection:/iget -K/g' -i imeta$SAMPLE.sh
-        sed ':a;N;$!ba;s/\ndataObj: /\//g' -i imeta$SAMPLE.sh
-        bash imeta$SAMPLE.sh
+ProcessSample () {
+        echo "Processing: "$1
+        mkdir -p fastq-$1
+        cd fastq-$1
+        printf '#!/bin/bash\nset -e\n\n----\n' > imeta$1.sh
+        imeta qu -z seq -d sample = $1 and target = 1 and library_type = 'Chromium single cell TCR'>> imeta$1.sh
+        sed ':a;N;$!ba;s/----\ncollection:/iget -K/g' -i imeta$1.sh
+        sed ':a;N;$!ba;s/\ndataObj: /\//g' -i imeta$1.sh
+        bash imeta$1.sh
         parallel bash cramfastq.sh ::: *.cram
         rm -f *.cram
         count=1
@@ -20,5 +21,10 @@ for SAMPLE in 5891STDY87091{27..30}
                 mv "${file}" "${file/*.cram/$SAMPLE\_S$count\_L001}"
                 (( count++ ))
             done
-        mkdir -p fastq-$SAMPLE && mv *.fastq.gz fastq-$SAMPLE
+        cd ..
+}
+
+for SAMPLE in Immunodeficiency8708742 Pla_HDBR8708838 Pla_HDBR8708839 5891STDY87091{27..30}
+    do 
+        ProcessSample $SAMPLE & 
     done
