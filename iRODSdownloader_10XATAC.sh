@@ -9,7 +9,7 @@ ProcessSample () {
         sed ':a;N;$!ba;s/----\ncollection:/iget -K/g' -i imeta$1.sh
         sed ':a;N;$!ba;s/\ndataObj: /\//g' -i imeta$1.sh
         bash imeta$1.sh
-        parallel bash cramfastq10XATAC.sh ::: *.cram
+        parallel bash ~/tools/linuxshell-genomics/cramfastq10XATAC.sh ::: *.cram
         rm -f *.cram
         count=1
         for file in *I1_001.fastq.gz

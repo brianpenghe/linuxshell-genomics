@@ -12,7 +12,7 @@ for SAMPLE in 5891STDY80386{66..67}
         sed ':a;N;$!ba;s/----\ncollection:/iget -K/g' -i imeta$SAMPLE.sh
         sed ':a;N;$!ba;s/\ndataObj: /\//g' -i imeta$SAMPLE.sh
         bash imeta$SAMPLE.sh
-        parallel bash cramfastq.sh ::: *.cram
+        parallel bash ~/tools/linuxshell-genomics/cramfastq.sh ::: *.cram
         rm -f *.cram
         count=1
         for file in *I1_001.fastq.gz
