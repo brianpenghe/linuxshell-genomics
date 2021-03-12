@@ -1,12 +1,13 @@
 #!/bin/bash
-#Before uploading, please make sure you have installed hca tool
+#Before uploading, please make sure you have installed hca-util
 #To install that, please run these on OpenStack:
-#sudo pip3 install hca
-#sudo chown -R ubuntu ~
+#sudo pip3 install hca-util
+#hca-util config <YOUR ACCESS KEY> <YOUR SECRET KEY>
+#hca-util select <YOUR IDENTIFIER>
 
 #This algorithm has been created by Krzysztof Polanski
+#210312, there was an update
 
-#!/bin/bash
 set -e
 
 for SAMPLE in 5891STDY80386{51..67}
@@ -24,7 +25,7 @@ do
     cat *R2_001.fastq.gz > $SAMPLE\_S1_L001_R2_001.fastq.gz
     rm *cram*
     #this might be file on older versions of the uploader
-    sudo hca upload files *.fastq.gz
+    hca-util upload files *.fastq.gz
     rm *.fastq.gz
 done
 
