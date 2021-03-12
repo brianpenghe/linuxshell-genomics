@@ -2,8 +2,7 @@
 #Before uploading, please make sure you have installed hca-util
 #To install that, please run these on OpenStack:
 #sudo pip3 install hca-util
-#hca-util config <YOUR ACCESS KEY> <YOUR SECRET KEY>
-#hca-util select <YOUR IDENTIFIER>
+#hca-util config AKIA4WBQCFL3O2EEJK5G G1HNqQ0d2D4ffesC6GVYk2wtp/9E7jijf7M/JtMh
 
 #This algorithm has been created by Krzysztof Polanski
 #210312, there was an update
