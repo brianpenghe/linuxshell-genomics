@@ -6,7 +6,7 @@
 #hca-util select <YOUR IDENTIFIER>
 #This algorithm has been created by Krzysztof Polanski
 #210312, there was an update
-
+#hca-util select <UPLOAD AREA>
 set -e
 
 for SAMPLE in 5891STDY80386{51..67}
@@ -18,13 +18,13 @@ do
     bash imeta.sh
     rm imeta.sh
     rm -f *#888.cram
-    parallel bash /mnt/mapcloud/scripts/10x/cramfastq.sh ::: *.cram
+    parallel bash ~/tools/linuxshell-genomics/cramfastq.sh ::: *.cram
     cat *I1_001.fastq.gz > $SAMPLE\_S1_L001_I1_001.fastq.gz
     cat *R1_001.fastq.gz > $SAMPLE\_S1_L001_R1_001.fastq.gz
     cat *R2_001.fastq.gz > $SAMPLE\_S1_L001_R2_001.fastq.gz
     rm *cram*
     #this might be file on older versions of the uploader
-    hca-util upload files *.fastq.gz
+    hca-util upload *.fastq.gz
     rm *.fastq.gz
 done
 
