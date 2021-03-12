@@ -3,7 +3,7 @@
 #To install that, please run these on OpenStack:
 #sudo pip3 install hca-util
 #hca-util config AKIA4WBQCFL3O2EEJK5G G1HNqQ0d2D4ffesC6GVYk2wtp/9E7jijf7M/JtMh
-
+#hca-util select <YOUR IDENTIFIER>
 #This algorithm has been created by Krzysztof Polanski
 #210312, there was an update
 
