@@ -1,0 +1,42 @@
+#!/bin/bash
+set -e
+
+DONORS=()
+SAMPLES=()
+
+DONORS=(HDBR14808 HDBR14804 HDBR14853 HDBR14854 HDBR15167 HDBR15168 \
+HDBR15233 HDBR15219 HDBR15279 HDBR15280)
+
+SAMPLES=('5891STDY8062349 5891STDY8062350' '5891STDY8062351 5891STDY8062352' \
+'5891STDY8062353 5891STDY8062354' '5891STDY8062355 5891STDY8062356' 'WSSS_F_LNG8713176 WSSS_F_LNG8713177' \
+'WSSS_F_LNG8713178 WSSS_F_LNG8713179 WSSS_F_LNG8713180 WSSS_F_LNG8713181' \
+'WSSS_F_LNG8713184 WSSS_F_LNG8713185 WSSS_F_LNG8713188 WSSS_F_LNG8713189' \
+'WSSS_F_LNG8713186 WSSS_F_LNG8713187 WSSS_F_LNG8713190 WSSS_F_LNG8713191' '5891STDY9030806 5891STDY9030808' '5891STDY9030807 5891STDY9030809')
+
+SAMPLENAMES=('5891STDY8062349.bam 5891STDY8062350.bam' '5891STDY8062351.bam 5891STDY8062352.bam' \
+'5891STDY8062353.bam 5891STDY8062354.bam' '5891STDY8062355.bam 5891STDY8062356.bam' 'WSSS_F_LNG8713176.bam WSSS_F_LNG8713177.bam' \
+'WSSS_F_LNG8713178.bam WSSS_F_LNG8713179.bam WSSS_F_LNG8713180.bam WSSS_F_LNG8713181.bam' \
+'WSSS_F_LNG8713184.bam WSSS_F_LNG8713185.bam WSSS_F_LNG8713188.bam WSSS_F_LNG8713189.bam' \
+'WSSS_F_LNG8713186.bam WSSS_F_LNG8713187.bam WSSS_F_LNG8713190.bam WSSS_F_LNG8713191.bam' '5891STDY9030806.bam 5891STDY9030808.bam' '5891STDY9030807.bam 5891STDY9030809.bam')
+
+for i in {0..9}
+do
+    DONOR=${DONORS[i]}
+    for SAMPLE in ${SAMPLES[i]}
+    #flag the CB: tags in the BAM
+      do
+        iget -K -r /archive/HCA/10X/$SAMPLE
+        sed "s/^/$SAMPLE-/" $SAMPLE/starsolo/counts/Gene/cr3/barcodes.tsv >> ${DONOR}barcodes.tsv
+        samtools index ${SAMPLE}/starsolo/Aligned.sortedByCoord.out.bam
+        python3 FlagBAM.py $SAMPLE ${SAMPLE}/starsolo/Aligned.sortedByCoord.out.bam
+        rm -r $SAMPLE
+      done
+samtools merge ${DONOR}.bam ${SAMPLENAMES[i]} -@ 16
+samtools index ${DONOR}.bam
+rm ${SAMPLENAMES[i]}
+
+singularity exec -B $PWD ~/tools/souporcell/souporcell.sif souporcell_pipeline.py \
+    -i ${DONOR}.bam -b ${DONOR}barcodes.tsv \
+    -f ~/refseq/refdata-cellranger-GRCh38-3.0.0/fasta/genome.fa -t 16 -o souporcell${DONOR} \
+    --common_variants ~/tools/souporcell/common_variants_grch38.vcf --skip_remap True -k 2
+done
