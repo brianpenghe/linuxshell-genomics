@@ -25,8 +25,8 @@ ProcessSample () {
             done
 	for file in *I1_001.fastq.gz
 	    do
-		mv "$(sed 's/I1/R2/g' <<< $file)" "$(sed 's/I1/R3/g' <<< $file)"
-		mv "$(sed 's/I1/I2/g' <<< $file)" "$(sed 's/I1/R2/g' <<< $file)"
+		mv "$(sed 's/I1/R2/g' <<< $file)" "$(sed 's/I1/R3/g' <<< $file)" #R2 reads are R3
+		mv "$(sed 's/I1/I2/g' <<< $file)" "$(sed 's/I1/R2/g' <<< $file)" #I2 reads are R2;But Cellranger ATAC now can accept unmodified format!
 	    done
         cd ..
 }
